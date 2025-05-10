@@ -23,9 +23,9 @@ app = Flask(__name__)
 ###-------------------------------------------####
 
 
-AZURE_ENDPOINT ="https://ai-demouptc087359287912.openai.azure.com/openai/deployments/gpt-4.1/chat/completions?api-version=2025-01-01-preview"
-AZURE_KEY = "6Ya4MtcecCFnY3NNFa4oBVk95WYRDTfkVb0ERZaIjSnUfqrCsuUIJQQJ99BEACHYHv6XJ3w3AAAAACOGHeiE"
-DEPLOYMENT_NAME = "gpt-4.1"
+AZURE_ENDPOINT =""
+AZURE_KEY = ""
+DEPLOYMENT_NAME = ""
 
 client = ChatCompletionsClient(
     endpoint=AZURE_ENDPOINT,
