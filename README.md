@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Aplicación web construida con **Flask** que conecta a un modelo **Azure AI (ChatCompletionsClient)** para ofrecer respuestas en español a preguntas ingresadas por el usuario. Este repositorio está diseñado para que puedas clonar el proyecto, configurarlo con tu Azure AI, probarlo localmente, personalizarlo, subirlo a tu propio GitHub y finalmente desplegarlo en Render.
+Aplicación web construida con **Flask** que conecta a un modelo **Azure AI (ChatCompletionsClient)** para ofrecer respuestas en español a preguntas ingresadas por el usuario. Este repositorio está diseñado para que puedas clonar el proyecto, configurarlo con tu Azure AI, probarlo localmente, personalizarlo, subirlo a tu propio GitHub y finalmente desplegarlo como Web App en Azure.
 
 ## Requisitos previos
 
@@ -10,6 +10,7 @@ Aplicación web construida con **Flask** que conecta a un modelo **Azure AI (Cha
 * Un **deployment** activo de un modelo (por ejemplo, `gpt-4o`, `gpt-4.1`, etc.).
 * Clave de API y URL del Endpoint de Azure AI Inference.
 * Python 3.9 o superior instalado.
+* Tener instalado **Visual Studio Code** y la extensión **Azure App Service**.
 
 ## Flujo de trabajo sugerido
 
@@ -19,7 +20,7 @@ Aplicación web construida con **Flask** que conecta a un modelo **Azure AI (Cha
 4. Probar localmente.
 5. Crear tu propio repositorio en GitHub.
 6. Subir los cambios a GitHub.
-7. Desplegar en Render.
+7. Publicar la app en Azure como Web App.
 
 ## Instalación local
 
@@ -34,8 +35,8 @@ cd tu_repositorio
 
 ```bash
 python -m venv venv
-source venv/bin/activate    
-venv\Scripts\activate
+source venv/bin/activate     # Linux/Mac
+venv\Scripts\activate        # Windows
 ```
 
 3. Instala las dependencias:
@@ -46,12 +47,14 @@ pip install -r requirements.txt
 
 ## Configuración de Azure
 
-Edita las siguientes variables en `app.py`:
+Edita las siguientes variables en `app.py` (opcional, si no quieres usar variables de ambiente):
 
 ```python
-AZURE_ENDPOINT = "https://<tu-endpoint>.openai.azure.com/openai/deployments/<tu-deployment>/chat/completions?api-version=2025-01-01-preview"
-AZURE_KEY = "<tu-clave-api>"
-DEPLOYMENT_NAME = "<nombre-de-tu-deployment>"
+import os
+
+AZURE_ENDPOINT = os.getenv("AZURE_ENDPOINT")
+AZURE_KEY = os.getenv("AZURE_KEY")
+DEPLOYMENT_NAME = os.getenv("DEPLOYMENT_NAME")
 ```
 
 ## Modificación del `index.html`
@@ -82,50 +85,39 @@ http://127.0.0.1:5000/
 
 1. Crea un nuevo repositorio en [GitHub](https://github.com/new).
 
-2. Inicializa el repositorio localmente (si no está inicializado):
+2. Inicializa el repositorio localmente:
 
 ```bash
 git init
-```
-
-3. Agrega todos los archivos y haz tu primer commit:
-
-```bash
 git add .
 git commit -m "Primer commit"
-```
-
-4. Crea la rama principal:
-
-```bash
 git branch -M main
-```
-
-5. Agrega el remoto de tu nuevo repositorio:
-
-```bash
 git remote add origin https://github.com/tu_usuario/tu_repositorio.git
-```
-
-6. Sube tus cambios a GitHub:
-
-```bash
 git push -u origin main
 ```
 
-## Despliegue en Render
+## Despliegue como Azure Web App desde Visual Studio Code
 
-1. Crea una nueva Web Service en [Render](https://render.com/).
+1. Abre el proyecto en **Visual Studio Code**.
+2. Instala la extensión **Azure App Service**.
+3. Inicia sesión en tu cuenta de Azure desde VS Code.
+4. Haz clic en "+" para crear una nueva Web App en Azure.
 
-2. Configura:
+   * Selecciona **Runtime Stack**: `Python 3.9` o superior.
+   * Selecciona tu plan de hosting o crea uno nuevo.
+5. Publica la aplicación en Azure:
 
-* **Build Command**: `pip install -r requirements.txt`
-* **Start Command**: `gunicorn app:app`
-* **Environment Variables**:
+   * Clic derecho en tu carpeta del proyecto -> **Deploy to Web App**.
+6. Configura las variables de ambiente en Azure:
 
-  * `AZURE_ENDPOINT`
-  * `AZURE_KEY`
-  * `DEPLOYMENT_NAME`
+   * Entra al **Portal de Azure**.
+   * Busca tu **Web App**.
+   * Navega a **Configuración > Configuración de Aplicación**.
+   * Agrega:
+
+     * `AZURE_ENDPOINT` con tu endpoint.
+     * `AZURE_KEY` con tu clave de API.
+     * `DEPLOYMENT_NAME` con el nombre de tu modelo desplegado.
 
 ## Estructura del Proyecto
 
