@@ -1,0 +1,4 @@
+Flask
+azure-ai-inference
+azure-core
+gunicorn
